@@ -51,7 +51,7 @@ export default function App() {
 
   return (
     <div className="app">
-      <Background isDay={now.getHours() >= 6 && now.getHours() < 18} />
+      <Background />
 
       <motion.div
         className="content"

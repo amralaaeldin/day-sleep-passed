@@ -1,19 +1,27 @@
-import { motion,AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 
 const dayImages = Object.values(
   import.meta.glob("./../assets/imgs/*.jpg", { eager: true, import: "default" })
 );
 
-export default function Background({ isDay }) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
+export default function Background() {
   // Choose correct image list based on time
   const images = dayImages;
 
+  const [currentIndex, setCurrentIndex] = useState(
+    Math.floor(Math.random() * images.length)
+  );
+
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % images.length);
+      setCurrentIndex((prev) => {
+        let next;
+        do {
+          next = Math.floor(Math.random() * images.length);
+        } while (next === prev && images.length > 1);
+        return next;
+      });
     }, 30000); // change every 30s
     return () => clearInterval(interval);
   }, [images]);
